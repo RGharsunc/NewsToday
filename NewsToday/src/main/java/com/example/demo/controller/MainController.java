@@ -19,7 +19,6 @@ public class MainController {
     PostService postService;
 
 
-
     @RequestMapping(value = "/")
     public String main() {
         return "redirect:/home";
@@ -35,9 +34,22 @@ public class MainController {
         return "contact";
     }
 
-    @RequestMapping(value = "admin")
-    public String toAdminJSP(ModelMap modelMap){
-        modelMap.addAttribute("categories", categoryService.getListOfCatergories() );
+    @RequestMapping(value = "/admin")
+    public String toAdminJSP(ModelMap modelMap) {
+
+        modelMap.addAttribute("categories", categoryService.getListOfCatergories());
+
+        modelMap.addAttribute("posts", postService.getListOfPosts());
+
+        modelMap.addAttribute("postsForDatePolitic",
+                postService.getPostsByDateAndCategoryId(categoryService.getCategoryByName("politic").getId()));
+        modelMap.addAttribute("postsForDateSport",
+                postService.getPostsByDateAndCategoryId(categoryService.getCategoryByName("sport").getId()));
+        modelMap.addAttribute("postsForDateLive_Stile",
+                postService.getPostsByDateAndCategoryId(categoryService.getCategoryByName("live_stile").getId()));
+        modelMap.addAttribute("postsForDateBusiness",
+                postService.getPostsByDateAndCategoryId(categoryService.getCategoryByName("business").getId()));
+
         return "admin";
     }
 

@@ -12,10 +12,11 @@ public class Post {
 
     private long id;
     private String title;
-    private String shortTitle;
     private String description;
     private Date createdDate;
     private long popIndex;
+    private long positIndex=0;
+    private long positIndexInCategory=10;
     private Category categoryByCategoryId;
     private String pic;
     private String region;
@@ -38,13 +39,23 @@ public class Post {
         this.title = title;
     }
 
-    @Column(name = "short_title")
-    public String getShortTitle() {
-        return shortTitle;
+    @Column(name = "posit_index", nullable = false, columnDefinition = "int default 0")
+    public long getPositIndex() {
+        return positIndex;
     }
 
-    public void setShortTitle(String shortTitle) {
-        this.shortTitle = shortTitle;
+    public void setPositIndex(long positIndex) {
+        this.positIndex = positIndex;
+    }
+
+    @Column(name = "posit_index_category", nullable = false, columnDefinition = "int default 10")
+
+    public long getPositIndexInCategory() {
+        return positIndexInCategory;
+    }
+
+    public void setPositIndexInCategory(long positIndexInCategory) {
+        this.positIndexInCategory = positIndexInCategory;
     }
 
     public String getDescription() {
@@ -99,5 +110,51 @@ public class Post {
         this.region = region;
     }
 
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", createdDate=" + createdDate +
+                ", popIndex=" + popIndex +
+                ", positIndex=" + positIndex +
+                ", categoryByCategoryId=" + categoryByCategoryId +
+                ", pic='" + pic + '\'' +
+                ", region='" + region + '\'' +
+                '}';
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Post post = (Post) o;
+
+        if (id != post.id) return false;
+        if (popIndex != post.popIndex) return false;
+        if (positIndex != post.positIndex) return false;
+        if (title != null ? !title.equals(post.title) : post.title != null) return false;
+        if (description != null ? !description.equals(post.description) : post.description != null) return false;
+        if (createdDate != null ? !createdDate.equals(post.createdDate) : post.createdDate != null) return false;
+        if (categoryByCategoryId != null ? !categoryByCategoryId.equals(post.categoryByCategoryId) : post.categoryByCategoryId != null)
+            return false;
+        if (pic != null ? !pic.equals(post.pic) : post.pic != null) return false;
+        return region != null ? region.equals(post.region) : post.region == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
+        result = 31 * result + (int) (popIndex ^ (popIndex >>> 32));
+        result = 31 * result + (int) (positIndex ^ (positIndex >>> 32));
+        result = 31 * result + (categoryByCategoryId != null ? categoryByCategoryId.hashCode() : 0);
+        result = 31 * result + (pic != null ? pic.hashCode() : 0);
+        result = 31 * result + (region != null ? region.hashCode() : 0);
+        return result;
+    }
 }

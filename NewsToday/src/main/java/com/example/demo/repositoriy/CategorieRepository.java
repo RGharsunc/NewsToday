@@ -1,8 +1,10 @@
 package com.example.demo.repositoriy;
 
 import com.example.demo.entity.Category;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+
+
 
 /**
  * Created by Vardan on 19.09.2017.
@@ -11,4 +13,6 @@ import org.springframework.stereotype.Repository;
 public interface CategorieRepository extends JpaRepository<Category,Long>  {
 
 
+    Category findByPosition(long id);
+    Category findCategoryByName(String name);
 }

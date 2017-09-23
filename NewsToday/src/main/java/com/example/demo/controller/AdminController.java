@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Post;
+import com.example.demo.service.CategoryService;
 import com.example.demo.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,9 +22,11 @@ public class AdminController {
 
     @Autowired
     PostService postService;
+
+    @Autowired
+    CategoryService categoryService;
     @Value("${NewsToday.fileDownload.path}")
     private String downloadPath;
-
 
 
     @ResponseBody
@@ -35,22 +38,73 @@ public class AdminController {
 
 
     @RequestMapping(value = "/admin/post/add", method = RequestMethod.POST)
-    public String addPost(@ModelAttribute ("newPost") Post post,
-                          @RequestParam ("img") MultipartFile image) throws IOException{
-        Post postWithImage=postService.fileUpload(post,image);
+    public String addPost(@ModelAttribute("newPost") Post post,
+                          @RequestParam("img") MultipartFile image) throws IOException {
+        Post postWithImage = postService.fileUpload(post, image);
         postWithImage.setCreatedDate(new Date());
-        postWithImage.setShortTitle(postWithImage.getTitle().substring(0,50));
         postService.addPost(postWithImage);
         return "redirect:/admin";
     }
 
 
-//    @RequestMapping(value = "/admin/product/add", method = RequestMethod.POST)
-//    public String addProduct(@ModelAttribute("addProduct") Product product,
-//                             @RequestParam("img") MultipartFile image
-//    ) throws IOException {
-//        Product productWithFile = productService.fileUpload(product, image);
-//        productService.addProduct(productWithFile);
-//        return "redirect:/admin";
-//    }
-}
+    @RequestMapping(value = "/admin/post/set/main-position")
+    public String setMainPosts(@RequestParam("id1") long id1,
+                               @RequestParam("id2") long id2,
+                               @RequestParam("id3") long id3,
+                               @RequestParam("id4") long id4) {
+
+        postService.addPostsToMainPosition(id1, id2, id3, id4);
+        return "redirect:/admin";
+
+    }
+
+    @RequestMapping(value = "/admin/category/set/positions")
+    public String setCategoryPosition(@RequestParam("category1") long id1,
+                                      @RequestParam("category2") long id2,
+                                      @RequestParam("category3") long id3,
+                                      @RequestParam("category4") long id4) {
+
+        categoryService.setCategoryPosition(id1, id2, id3, id4);
+        return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/admin/post/set/positions/in/business")
+    public String setCategoryPositionInBusinessArea(@RequestParam("post1") long id1,
+                                                    @RequestParam("post2") long id2,
+                                                    @RequestParam("post3") long id3,
+                                                    @RequestParam("post4") long id4) {
+
+        postService.setPositionInCategory(7, id1, id2, id3, id4);
+        return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/admin/post/set/positions/in/politic")
+    public String setCategoryPositionInPoliticArea(@RequestParam("post1") long id1,
+                                                   @RequestParam("post2") long id2,
+                                                   @RequestParam("post3") long id3,
+                                                   @RequestParam("post4") long id4) {
+
+        postService.setPositionInCategory(2, id1, id2, id3, id4);
+        return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/admin/post/set/positions/in/sport")
+    public String setCategoryPositionInSportArea(@RequestParam("post1") long id1,
+                                                    @RequestParam("post2") long id2,
+                                                    @RequestParam("post3") long id3,
+                                                    @RequestParam("post4") long id4) {
+
+        postService.setPositionInCategory(3, id1, id2, id3, id4);
+        return "redirect:/admin";}
+
+        @RequestMapping(value = "/admin/post/set/positions/in/live_stile")
+        public String setCategoryPositionInLive_StileArea ( @RequestParam("post1") long id1,
+        @RequestParam("post2") long id2,
+        @RequestParam("post3") long id3,
+        @RequestParam("post4") long id4){
+
+            postService.setPositionInCategory(4, id1, id2, id3, id4);
+            return "redirect:/admin";
+        }
+    }
+

@@ -118,11 +118,20 @@
     </section>
     <section id="contentSection">
         <div class="row">
-            <div class="col-lg-8 col-md-8 col-sm-8 well" style="width: 450px">
-                <div class="left_content">
+
+            <div>
+                <h2 class="well" style="margin-left: 120px;margin-right: 120px;background-color: #adadad"
+                    align="center"> POSTS & CATEGORIES</h2>
+            </div>
+            <%--Add Post--%>
+
+
+            <div class="col-lg-8 col-md-8 col-sm-8 " style="width: 370px">
+                <div class="left_content well">
                     <div class="contact_area">
                         <h2>Add Post</h2>
-                        <form action="/admin/post/add" class="contact_form" name="newPost" method="post"  enctype="multipart/form-data" role="form">
+                        <form action="/admin/post/add" class="contact_form" name="newPost" method="post"
+                              enctype="multipart/form-data" role="form">
                             <input class="form-control" type="text" placeholder="Title*" name="title">
                             <textarea class="form-control" cols="20" rows="10" name="description"
                                       placeholder="Description*"></textarea>
@@ -146,36 +155,234 @@
                             <input type="submit" value="Add post">
                         </form>
                     </div>
-                    <%--<div class="contact_area">--%>
-                    <%--<h2>Add Post</h2>--%>
-                    <%--<form action="/admin/post/add" class="contact_form" method="post">--%>
-                    <%--<input class="form-control" type="text" placeholder="Title*" name="title">--%>
-                    <%--<textarea class="form-control" cols="20" rows="10" name="dexcription"--%>
-                    <%--placeholder="Description*"></textarea>--%>
-                    <%--<input class="form-control" type="text" placeholder="Region*" name="region">--%>
-                    <%--<label for="category">Choose the post category</label>--%>
-
-                    <%--<select class="form-control" name="categoryByCategoryId" id="category">--%>
-
-                    <%--<c:forEach items="${categories}" var="category">--%>
-                    <%--<option value="${category.id}">${category.name}--%>
-                    <%--</option>--%>
-                    <%--</c:forEach>--%>
-                    <%--</select><br>--%>
-                    <%--<label for="pic">Set post picture</label>--%>
-                    <%--<input class="form-control" id="pic" type="file" name="img" style="background-color: #f7e1b5"><br>--%>
-
-                    <%--<input type="submit" value="Add post">--%>
-                    <%--</form>--%>
-                    <%--</div>--%>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4">
-                <aside class="right_content">
 
-                </aside>
+
+            <%--Choose from post list main four posts--%>
+
+
+            <div class="col-lg-8 col-md-8 col-sm-8 " style="width: 370px">
+
+                <div class="left_content well">
+                    <div class="contact_area">
+                        <h2>Choose from post list main four posts</h2>
+                        <form action="/admin/post/set/main-position" class="contact_form" method="post">
+
+                            <select class="form-control" name="id1">
+                                <c:forEach items="${posts}" var="post">
+                                    <option value="${post.id}">${post.title.substring(0,30)}${"..."}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="id2">
+                                <c:forEach items="${posts}" var="post">
+                                    <option value="${post.id}">${post.title.substring(0,30)}${"..."}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="id3">
+                                <c:forEach items="${posts}" var="post">
+                                    <option value="${post.id}">${post.title.substring(0,30)}${"..."}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="id4">
+                                <c:forEach items="${posts}" var="post">
+                                    <option value="${post.id}">${post.title.substring(0,30)}${"..."}</option>
+                                </c:forEach>
+                            </select><br>
+                            <input type="submit" value="Confirm">
+                        </form>
+                    </div>
+                    </aside>
+                </div>
+            </div>
+
+
+            <%--Choose categories position--%>
+
+
+            <div class="col-lg-8 col-md-8 col-sm-8 " style="width: 370px">
+
+                <div class="left_content well">
+                    <div class="contact_area">
+                        <h2>Choose categories position</h2>
+                        <form action="/admin/category/set/positions" class="contact_form" method="post">
+
+                            <select class="form-control" name="category1">
+                                <c:forEach items="${categories}" var="category">
+                                    <option value="${category.id}">${category.name}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="category2">
+                                <c:forEach items="${categories}" var="category">
+                                    <option value="${category.id}">${category.name}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="category3">
+                                <c:forEach items="${categories}" var="category">
+                                    <option value="${category.id}">${category.name}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="category4">
+                                <c:forEach items="${categories}" var="category">
+                                    <option value="${category.id}">${category.name}</option>
+                                </c:forEach>
+                            </select><br>
+                            <input type="submit" value="Confirm">
+                        </form>
+                    </div>
+                    <%--</aside>--%>
+                </div>
             </div>
         </div>
+        <br>
+
+
+        <%--POST POSITIONS BY CATEGORY AREAS--%>
+
+
+        <div class="row">
+            <div>
+                <h2 class="well" style="margin-left: 120px;margin-right: 120px;background-color: #adadad"
+                    align="center"> SET POST POSITIONS BY CATEGORY AREAS</h2>
+            </div>
+
+            <div class="col-lg-8 col-md-8 col-sm-8 " style="width: 554px">
+
+                <div class="left_content well">
+                    <div class="contact_area">
+                        <h2>politic</h2>
+                        <form action="/admin/post/set/positions/in/politic" class="contact_form" method="post">
+
+                            <select class="form-control" name="post1">
+                                <c:forEach items="${postsForDatePolitic}" var="post">
+                                    <option value="${post.id}" >${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="post2">
+                                <c:forEach items="${postsForDatePolitic}" var="post">
+                                    <option value="${post.id}" style=" overflow: hidden;">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="post3">
+                                <c:forEach items="${postsForDatePolitic}" var="post">
+                                    <option value="${post.id}" style=" overflow: hidden;">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="post4">
+                                <c:forEach items="${postsForDatePolitic}" var="post">
+                                    <option value="${post.id}" style=" overflow: hidden;">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+
+                            <input type="submit" value="Confirm">
+                        </form>
+                    </div>
+                    <%--</aside>--%>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 " style="width: 554px">
+
+                <div class="left_content well">
+                    <div class="contact_area">
+                        <h2>business</h2>
+                        <form action="/admin/post/set/positions/in/business" class="contact_form" method="post">
+
+                            <select class="form-control" name="post1">
+                                <c:forEach items="${postsForDateBusiness}" var="post">
+                                    <option value="${post.id}">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="post2">
+                                <c:forEach items="${postsForDateBusiness}" var="post">
+                                    <option value="${post.id}">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="post3">
+                                <c:forEach items="${postsForDateBusiness}" var="post">
+                                    <option value="${post.id}">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="post4">
+                                <c:forEach items="${postsForDateBusiness}" var="post">
+                                    <option value="${post.id}">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+
+                            <input type="submit" value="Confirm">
+                        </form>
+                    </div>
+                    <%--</aside>--%>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 " style="width: 554px">
+
+                <div class="left_content well">
+                    <div class="contact_area">
+                        <h2>sport</h2>
+
+                        <form action="/admin/post/set/positions/in/sport" class="contact_form" method="post">
+
+                            <select class="form-control" name="post1">
+                                <c:forEach items="${postsForDateSport}" var="post">
+                                    <option value="${post.id}">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="post2">
+                                <c:forEach items="${postsForDateSport}" var="post">
+                                    <option value="${post.id}">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="post3">
+                                <c:forEach items="${postsForDateSport}" var="post">
+                                    <option value="${post.id}">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="post4">
+                                <c:forEach items="${postsForDateSport}" var="post">
+                                    <option value="${post.id}">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+                            <input type="submit" value="Confirm">
+                        </form>
+                    </div>
+                    <%--</aside>--%>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-8 " style="width: 554px">
+
+                <div class="left_content well">
+                    <div class="contact_area">
+                        <h2>live-stile</h2>
+                        <form action="/admin/post/set/positions/in/live_stile" class="contact_form" method="post">
+
+                            <select class="form-control" name="post1">
+                                <c:forEach items="${postsForDateLive_Stile}" var="post">
+                                    <option value="${post.id}">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="post2">
+                                <c:forEach items="${postsForDateLive_Stile}" var="post">
+                                    <option value="${post.id}">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="post3">
+                                <c:forEach items="${postsForDateLive_Stile}" var="post">
+                                    <option value="${post.id}">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+                            <select class="form-control" name="post4">
+                                <c:forEach items="${postsForDateLive_Stile}" var="post">
+                                    <option value="${post.id}">${post.title}</option>
+                                </c:forEach>
+                            </select><br>
+                            <input type="submit" value="Confirm">
+                        </form>
+                    </div>
+                    <%--</aside>--%>
+                </div>
+            </div>
+        </div>
+        <br>
     </section>
     <footer id="footer">
         <%--<div class="footer_top">--%>
