@@ -21,6 +21,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByCategoryByCategoryIdName(String name);
 
     List<Post> findAllByCategoryByCategoryIdId(long id);
+    List<Post> findAllByCategoryByCategoryIdIdOrderByPopIndexDesc(long id);
+
 
     Post findByPositIndexInCategoryAndCategoryByCategoryIdId(long positIndexInCategory, long categoryId);
 //     List<Post> findAllByPositIndexGreaterThan(long i);

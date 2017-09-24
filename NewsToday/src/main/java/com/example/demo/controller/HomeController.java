@@ -23,6 +23,9 @@ public class HomeController {
     public String toIndexJSP(ModelMap modelMap) {
         modelMap.addAttribute("postList", postService.getListOfPosts());
 
+        modelMap.addAttribute("popularPostsPhotos", postService.getSortedListByPopIndex().subList(5,14));
+        modelMap.addAttribute("popularPosts", postService.getSortedListByPopIndex().subList(0,5));
+
         modelMap.addAttribute("categoryList", categoryService.getListOfCatergories());
 
         modelMap.addAttribute("sliderPosts", postService.getPostsByDate());
@@ -32,13 +35,13 @@ public class HomeController {
         modelMap.addAttribute("sortedCategories", categoryService.getCategoryListByPositIndex());
 
         modelMap.addAttribute("politicPosts", postService.
-                getListOfPostsByCtegoryId(categoryService.getCategoryByName("politic").getId()));
+                getListOfPostsByCategoryId(categoryService.getCategoryByName("politic").getId()));
         modelMap.addAttribute("sportPosts", postService.
-                getListOfPostsByCtegoryId(categoryService.getCategoryByName("sport").getId()));
+                getListOfPostsByCategoryId(categoryService.getCategoryByName("sport").getId()));
         modelMap.addAttribute("live_stilePosts", postService.
-                getListOfPostsByCtegoryId(categoryService.getCategoryByName("live_stile").getId()));
+                getListOfPostsByCategoryId(categoryService.getCategoryByName("live_stile").getId()));
         modelMap.addAttribute("businessPosts", postService.
-                getListOfPostsByCtegoryId(categoryService.getCategoryByName("business").getId()));
+                getListOfPostsByCategoryId(categoryService.getCategoryByName("business").getId()));
         return "index";
     }
 

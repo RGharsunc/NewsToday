@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Partner;
 import com.example.demo.entity.Post;
 import com.example.demo.service.CategoryService;
+import com.example.demo.service.PartnerService;
 import com.example.demo.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +27,10 @@ public class AdminController {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    PartnerService partnerService;
+
     @Value("${NewsToday.fileDownload.path}")
     private String downloadPath;
 
@@ -32,6 +38,13 @@ public class AdminController {
     @ResponseBody
     @RequestMapping(value = "/getImage", method = RequestMethod.GET)
     public byte[] getImageAsByteArray(@RequestParam("filename") String filename) throws Exception {
+        InputStream in = new FileInputStream(downloadPath + filename);
+        return org.apache.commons.io.IOUtils.toByteArray(in);
+    }
+
+@ResponseBody
+    @RequestMapping(value = "/getPartnerImage", method = RequestMethod.GET)
+    public byte[] getPartnerImageAsByteArray(@RequestParam("filename") String filename) throws Exception {
         InputStream in = new FileInputStream(downloadPath + filename);
         return org.apache.commons.io.IOUtils.toByteArray(in);
     }
@@ -90,21 +103,34 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/post/set/positions/in/sport")
     public String setCategoryPositionInSportArea(@RequestParam("post1") long id1,
-                                                    @RequestParam("post2") long id2,
-                                                    @RequestParam("post3") long id3,
-                                                    @RequestParam("post4") long id4) {
+                                                 @RequestParam("post2") long id2,
+                                                 @RequestParam("post3") long id3,
+                                                 @RequestParam("post4") long id4) {
 
         postService.setPositionInCategory(3, id1, id2, id3, id4);
-        return "redirect:/admin";}
-
-        @RequestMapping(value = "/admin/post/set/positions/in/live_stile")
-        public String setCategoryPositionInLive_StileArea ( @RequestParam("post1") long id1,
-        @RequestParam("post2") long id2,
-        @RequestParam("post3") long id3,
-        @RequestParam("post4") long id4){
-
-            postService.setPositionInCategory(4, id1, id2, id3, id4);
-            return "redirect:/admin";
-        }
+        return "redirect:/admin";
     }
+
+    @RequestMapping(value = "/admin/post/set/positions/in/live_stile")
+    public String setCategoryPositionInLive_StileArea(@RequestParam("post1") long id1,
+                                                      @RequestParam("post2") long id2,
+                                                      @RequestParam("post3") long id3,
+                                                      @RequestParam("post4") long id4) {
+
+        postService.setPositionInCategory(4, id1, id2, id3, id4);
+        return "redirect:/admin";
+    }
+
+
+
+
+    @RequestMapping(value = "/admin/partner/add", method = RequestMethod.POST)
+    public String addPArtner(@ModelAttribute("partner") Partner partner,
+                          @RequestParam("img") MultipartFile image) throws IOException {
+        Partner  partnerWithImage = partnerService.fileUploadPartner(partner, image);
+        partnerService.addPartner(partnerWithImage);
+        return "redirect:/admin";
+    }
+
+}
 

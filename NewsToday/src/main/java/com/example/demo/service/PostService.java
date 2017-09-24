@@ -26,6 +26,7 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
+
     public Post fileUpload(Post post, MultipartFile img) throws IOException {
         //file upload
         File dir = new File("D:\\java\\NewsToday");
@@ -40,17 +41,27 @@ public class PostService {
         stream1.close();
         post.setPic(image);
         return post;
-
-
     }
+
 
     public List<Post> getListOfPosts() {
         return postRepository.findAll();
     }
-    public List<Post> getListOfPostsByCtegoryId(long id){
-        return  postRepository.findAllByCategoryByCategoryIdId(id);
+
+
+    public List<Post> getListOfPostsByCategoryId(long id) {
+        List<Post> posts1 = postRepository.findAllByCategoryByCategoryIdId(id);
+        List<Post> posts2 = new ArrayList<>(4);
+        for (int i = 1; i <= 4; i++) {
+            for (Post post : posts1) {
+                if (post.getPositIndexInCategory() == i) {
+                    posts2.add(post);
+                }
+            }
+        }
+        return posts2;
     }
-    
+
 
     private Date getDayBeforeDate(int i) {
         Date date;
@@ -59,6 +70,7 @@ public class PostService {
         date = cal.getTime();
         return date;
     }
+
 
     public List<Post> getPostsByDate() {
         int i = -1;
@@ -69,22 +81,24 @@ public class PostService {
             i--;
         }
         return postList;
-
     }
 
-    public List<Post> getPostsByDateAndCategoryId(long id){
+
+    public List<Post> getPostsByDateAndCategoryId(long id) {
         int i = -1;
         List<Post> postList = new ArrayList<>();
         while (postList.size() == 0) {
-            postList = postRepository.findByCreatedDateAfterAndCategoryByCategoryIdId(getDayBeforeDate(i),id);
+            postList = postRepository.findByCreatedDateAfterAndCategoryByCategoryIdId(getDayBeforeDate(i), id);
             i--;
         }
         return postList;
     }
 
+
     public Post getPostById(long id) {
         return postRepository.findOne(id);
     }
+
 
     public void addPost(Post post) {
         postRepository.save(post);
@@ -101,8 +115,6 @@ public class PostService {
         Post post = postRepository.findOne(id);
         post.setPositIndex(index);
         postRepository.save(post);
-
-
     }
 
 
@@ -122,12 +134,9 @@ public class PostService {
         if (id4 != 0) {
             setIndexForPostById(id4, 1);
         }
-
     }
 
-    //    public List<Post> getPostsWherePositIndexGreaterThan() {
-//        return postRepository.findAllByPositIndexGreaterThan(0);
-//    }
+
     private List<Post> getSortedPostList() {
         return postRepository.findAll(sortByPositIndexAsc());
     }
@@ -135,6 +144,18 @@ public class PostService {
     private Sort sortByPositIndexAsc() {
         return new Sort(Sort.Direction.DESC, "positIndex");
     }
+
+
+    public List<Post> getSortedListByPopIndex() {
+        return postRepository.findAll(sortByPopIndex());
+    }
+
+    ;
+
+    private Sort sortByPopIndex() {
+        return new Sort(Sort.Direction.DESC, "popIndex");
+    }
+
 
     public List<Post> getPostListByPositIndex() {
         List<Post> posts1 = getSortedPostList();
@@ -145,60 +166,59 @@ public class PostService {
         return posts2;
     }
 
-    public List<Post> getPostListByCategory(String name){
+
+    public List<Post> getPostListByCategory(String name) {
         return postRepository.findAllByCategoryByCategoryIdName(name);
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private void setPositIndexForPostInCategory(long id, long index, long categoryId) {
 
-        if (postRepository.findByPositIndexInCategoryAndCategoryByCategoryIdId(index,categoryId) != null) {
-            Post post= postRepository.findByPositIndexInCategoryAndCategoryByCategoryIdId(index,categoryId);
+        if (postRepository.findByPositIndexInCategoryAndCategoryByCategoryIdId(index, categoryId) != null) {
+            Post post = postRepository.findByPositIndexInCategoryAndCategoryByCategoryIdId(index, categoryId);
             post.setPositIndexInCategory(10);
             postRepository.save(post);
         }
-        Post post= postRepository.findOne(id);
+        Post post = postRepository.findOne(id);
         post.setPositIndexInCategory(index);
         postRepository.save(post);
+    }
 
+
+    public void setPositionInCategory(long categoryId,
+                                      long id1,
+                                      long id2,
+                                      long id3,
+                                      long id4) {
+        if (id1 != 0) {
+            setPositIndexForPostInCategory(id1, 1, categoryId);
+        }
+        if (id2 != 0) {
+            setPositIndexForPostInCategory(id2, 2, categoryId);
+        }
+        if (id3 != 0) {
+            setPositIndexForPostInCategory(id3, 3, categoryId);
+        }
+        if (id4 != 0) {
+            setPositIndexForPostInCategory(id4, 4, categoryId);
+        }
 
     }
 
-    public void setPositionInCategory(long categoryId,
-                                    long id1,
-                                    long id2,
-                                    long id3,
-                                    long id4) {
-        if (id1 != 0) {
-            setPositIndexForPostInCategory(id1, 1,categoryId);
-        }
-        if (id2 != 0) {
-            setPositIndexForPostInCategory(id2, 2,categoryId);
-        }
-        if (id3 != 0) {
-            setPositIndexForPostInCategory(id3, 3,categoryId);
-        }
-        if (id4 != 0) {
-            setPositIndexForPostInCategory(id4, 4,categoryId);
-        }
+
+    public void addPopularIndexOfPost(long id) {
+        Post post = postRepository.findOne(id);
+        long popIndex = post.getPopIndex();
+        post.setPopIndex(popIndex + 1L);
+        postRepository.save(post);
+
+    }
+
+    public List<Post> getSameCategoryPosts(long postId) {
+        Post post = getPostById(postId);
+        long categoryId = post.getCategoryByCategoryId().getId();
+
+       return  postRepository.findAllByCategoryByCategoryIdIdOrderByPopIndexDesc(categoryId);
 
     }
 }

@@ -72,11 +72,11 @@ public class CategoryService {
     }
 
     public List<Category> getCategoryListByPositIndex() {
-        List<Category> categories1 = getSortedCategoryList();
-        List<Category> categories2 = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            categories2.add(categories1.get(i));
-        }
+        List<Category> categories2 = getSortedCategoryList();
+//        List<Category> categories2 = new ArrayList<>();
+//        for (int i = 0; i < 4; i++) {
+//            categories2.add(categories1.get(i));
+//        }
         return categories2;
     }
 

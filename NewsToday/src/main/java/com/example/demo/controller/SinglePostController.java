@@ -18,7 +18,14 @@ public class SinglePostController {
     @RequestMapping(value = "/post/{id}")
     public String toSinglePost(@PathVariable("id") long id, ModelMap modelMap) {
 
-        modelMap.addAttribute("post", postService.getPostById(id));
+        postService.addPopularIndexOfPost(id);
+
+        modelMap.addAttribute("sliderPosts", postService.getPostsByDate());
+        modelMap.addAttribute("postById", postService.getPostById(id));
+        modelMap.addAttribute("popularPosts", postService.getSortedListByPopIndex().subList(0, 4));
+        modelMap.addAttribute("sameCategoryPosts", postService.getSameCategoryPosts(id).subList(0,3));
+
+
         return "single_page";
     }
 

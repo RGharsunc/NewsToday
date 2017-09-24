@@ -6,6 +6,7 @@ import com.example.demo.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -24,10 +25,7 @@ public class MainController {
         return "redirect:/home";
     }
 
-    @RequestMapping(value = "/single_page")
-    public String toPost() {
-        return "single_page";
-    }
+
 
     @RequestMapping(value = "/contact")
     public String toContactJSP() {
@@ -37,9 +35,10 @@ public class MainController {
     @RequestMapping(value = "/admin")
     public String toAdminJSP(ModelMap modelMap) {
 
+        modelMap.addAttribute("sliderPosts", postService.getPostsByDate());
         modelMap.addAttribute("categories", categoryService.getListOfCatergories());
-
         modelMap.addAttribute("posts", postService.getListOfPosts());
+        modelMap.addAttribute("popularPosts", postService.getSortedListByPopIndex());
 
         modelMap.addAttribute("postsForDatePolitic",
                 postService.getPostsByDateAndCategoryId(categoryService.getCategoryByName("politic").getId()));

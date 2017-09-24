@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>NewsFeed | Pages | Contact</title>
+    <title>NewsFeed | Pages | Admin</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,6 +37,8 @@
                             <li><a href="../index.html">Home</a></li>
                             <li><a href="#">About</a></li>
                             <li><a href="contact.html">Contact</a></li>
+                            <script> document.write(new Date().toLocaleDateString()); </script>
+
                         </ul>
                     </div>
                     <div class="header_top_right">
@@ -46,7 +48,7 @@
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="header_bottom">
-                    <div class="logo_area"><a href="../index.html" class="logo"><img src="../../images/logo.jpg" alt=""></a>
+                    <div class="logo_area"><a href="/home" class="logo"><img src="../../images/logo-main.jpg" alt=""></a>
                     </div>
                     <div class="add_banner"><a href="#"><img src="../../images/addbanner_728x90_V1.jpg" alt=""></a>
                     </div>
@@ -64,7 +66,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav main_nav">
-                    <li class="active"><a href="../index.html"><span class="fa fa-home desktop-home"></span><span
+                    <li class="active"><a href="/home"><span class="fa fa-home desktop-home"></span><span
                             class="mobile-show">Home</span></a></li>
                     <li><a href="#">Technology</a></li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -90,26 +92,23 @@
             <div class="col-lg-12 col-md-12">
                 <div class="latest_newsarea"><span>Latest News</span>
                     <ul id="ticker01" class="news_sticker">
-                        <li><a href="#"><img src="../../images/news_thumbnail3.jpg" alt="">My First News Item</a></li>
-                        <li><a href="#"><img src="../../images/news_thumbnail3.jpg" alt="">My Second News Item</a></li>
-                        <li><a href="#"><img src="../../images/news_thumbnail3.jpg" alt="">My Third News Item</a></li>
-                        <li><a href="#"><img src="../../images/news_thumbnail3.jpg" alt="">My Four News Item</a></li>
-                        <li><a href="#"><img src="../../images/news_thumbnail3.jpg" alt="">My Five News Item</a></li>
-                        <li><a href="#"><img src="../../images/news_thumbnail3.jpg" alt="">My Six News Item</a></li>
-                        <li><a href="#"><img src="../../images/news_thumbnail3.jpg" alt="">My Seven News Item</a></li>
-                        <li><a href="#"><img src="../../images/news_thumbnail3.jpg" alt="">My Eight News Item</a></li>
-                        <li><a href="#"><img src="../../images/news_thumbnail2.jpg" alt="">My Nine News Item</a></li>
+                        <c:forEach items="${sliderPosts}" var="post">
+                            <li style="overflow: hidden"><a href="/post/${post.id}"><img
+                                    src="/getImage?filename=${post.pic}" alt="">${post.title}&nbsp;</a>
+                            </li>
+                        </c:forEach>
                     </ul>
                     <div class="social_area">
                         <ul class="social_nav">
                             <li class="facebook"><a href="#"></a></li>
                             <li class="twitter"><a href="#"></a></li>
-                            <li class="flickr"><a href="#"></a></li>
-                            <li class="pinterest"><a href="#"></a></li>
+                            <%--<li class="flickr"><a href="#"></a></li>--%>
+                            <%--<li class="pinterest"><a href="#"></a></li>--%>
                             <li class="googleplus"><a href="#"></a></li>
-                            <li class="vimeo"><a href="#"></a></li>
+                            <%--<li class="vimeo"><a href="#"></a></li>--%>
                             <li class="youtube"><a href="#"></a></li>
-                            <li class="mail"><a href="#"></a></li>
+                            <%--<li class="search"><a href="#"></a></li>--%>
+                            <%--<li><input type="search"> </li>--%>
                         </ul>
                     </div>
                 </div>
@@ -381,6 +380,137 @@
                     <%--</aside>--%>
                 </div>
             </div>
+        </div>
+ <div class="row">
+            <div>
+                <h2 class="well" style="margin-left: 120px;margin-right: 120px;background-color: #adadad"
+                    align="center"> SET POST POSITIONS BY CATEGORY AREAS</h2>
+            </div>
+
+     <div class="col-lg-8 col-md-8 col-sm-8 " style="width: 370px">
+         <div class="left_content well">
+             <div class="contact_area">
+                 <h2>Add Partner</h2>
+                 <form action="/admin/partner/add" class="contact_form" name="partner" method="post"
+                       enctype="multipart/form-data" role="form">
+                     <input class="form-control" type="text" placeholder="Name*" name="name">
+                     <input class="form-control" type="text" placeholder="URL*" name="url">
+                     <input class="form-control" type="text" placeholder="Video URL*" name="video">
+                     <input class="form-control" type="text" placeholder="Title*" name="title">
+                     <textarea class="form-control" cols="20" rows="10" name="description"
+                               placeholder="Description*"></textarea>
+                     <label for="image">Set partner picture</label>
+                     <div class="media">
+                         <div class="media-left">
+                             <input class="form-control" id="image" type="file" name="img"><br>
+                         </div>
+                     </div>
+                     <input type="submit" value="Add partner">
+                 </form>
+             </div>
+         </div>
+     </div>
+            <%--<div class="col-lg-8 col-md-8 col-sm-8 " style="width: 554px">--%>
+
+                <%--<div class="left_content well">--%>
+                    <%--<div class="contact_area">--%>
+                        <%--<h2>business</h2>--%>
+                        <%--<form action="/admin/post/set/positions/in/business" class="contact_form" method="post">--%>
+
+                            <%--<select class="form-control" name="post1">--%>
+                                <%--<c:forEach items="${postsForDateBusiness}" var="post">--%>
+                                    <%--<option value="${post.id}">${post.title}</option>--%>
+                                <%--</c:forEach>--%>
+                            <%--</select><br>--%>
+                            <%--<select class="form-control" name="post2">--%>
+                                <%--<c:forEach items="${postsForDateBusiness}" var="post">--%>
+                                    <%--<option value="${post.id}">${post.title}</option>--%>
+                                <%--</c:forEach>--%>
+                            <%--</select><br>--%>
+                            <%--<select class="form-control" name="post3">--%>
+                                <%--<c:forEach items="${postsForDateBusiness}" var="post">--%>
+                                    <%--<option value="${post.id}">${post.title}</option>--%>
+                                <%--</c:forEach>--%>
+                            <%--</select><br>--%>
+                            <%--<select class="form-control" name="post4">--%>
+                                <%--<c:forEach items="${postsForDateBusiness}" var="post">--%>
+                                    <%--<option value="${post.id}">${post.title}</option>--%>
+                                <%--</c:forEach>--%>
+                            <%--</select><br>--%>
+
+                            <%--<input type="submit" value="Confirm">--%>
+                        <%--</form>--%>
+                    <%--</div>--%>
+                    <%--&lt;%&ndash;</aside>&ndash;%&gt;--%>
+                <%--</div>--%>
+            <%--</div>--%>
+            <%--<div class="col-lg-8 col-md-8 col-sm-8 " style="width: 554px">--%>
+
+                <%--<div class="left_content well">--%>
+                    <%--<div class="contact_area">--%>
+                        <%--<h2>sport</h2>--%>
+
+                        <%--<form action="/admin/post/set/positions/in/sport" class="contact_form" method="post">--%>
+
+                            <%--<select class="form-control" name="post1">--%>
+                                <%--<c:forEach items="${postsForDateSport}" var="post">--%>
+                                    <%--<option value="${post.id}">${post.title}</option>--%>
+                                <%--</c:forEach>--%>
+                            <%--</select><br>--%>
+                            <%--<select class="form-control" name="post2">--%>
+                                <%--<c:forEach items="${postsForDateSport}" var="post">--%>
+                                    <%--<option value="${post.id}">${post.title}</option>--%>
+                                <%--</c:forEach>--%>
+                            <%--</select><br>--%>
+                            <%--<select class="form-control" name="post3">--%>
+                                <%--<c:forEach items="${postsForDateSport}" var="post">--%>
+                                    <%--<option value="${post.id}">${post.title}</option>--%>
+                                <%--</c:forEach>--%>
+                            <%--</select><br>--%>
+                            <%--<select class="form-control" name="post4">--%>
+                                <%--<c:forEach items="${postsForDateSport}" var="post">--%>
+                                    <%--<option value="${post.id}">${post.title}</option>--%>
+                                <%--</c:forEach>--%>
+                            <%--</select><br>--%>
+                            <%--<input type="submit" value="Confirm">--%>
+                        <%--</form>--%>
+                    <%--</div>--%>
+                    <%--&lt;%&ndash;</aside>&ndash;%&gt;--%>
+                <%--</div>--%>
+            <%--</div>--%>
+            <%--<div class="col-lg-8 col-md-8 col-sm-8 " style="width: 554px">--%>
+
+                <%--<div class="left_content well">--%>
+                    <%--<div class="contact_area">--%>
+                        <%--<h2>live-stile</h2>--%>
+                        <%--<form action="/admin/post/set/positions/in/live_stile" class="contact_form" method="post">--%>
+
+                            <%--<select class="form-control" name="post1">--%>
+                                <%--<c:forEach items="${postsForDateLive_Stile}" var="post">--%>
+                                    <%--<option value="${post.id}">${post.title}</option>--%>
+                                <%--</c:forEach>--%>
+                            <%--</select><br>--%>
+                            <%--<select class="form-control" name="post2">--%>
+                                <%--<c:forEach items="${postsForDateLive_Stile}" var="post">--%>
+                                    <%--<option value="${post.id}">${post.title}</option>--%>
+                                <%--</c:forEach>--%>
+                            <%--</select><br>--%>
+                            <%--<select class="form-control" name="post3">--%>
+                                <%--<c:forEach items="${postsForDateLive_Stile}" var="post">--%>
+                                    <%--<option value="${post.id}">${post.title}</option>--%>
+                                <%--</c:forEach>--%>
+                            <%--</select><br>--%>
+                            <%--<select class="form-control" name="post4">--%>
+                                <%--<c:forEach items="${postsForDateLive_Stile}" var="post">--%>
+                                    <%--<option value="${post.id}">${post.title}</option>--%>
+                                <%--</c:forEach>--%>
+                            <%--</select><br>--%>
+                            <%--<input type="submit" value="Confirm">--%>
+                        <%--</form>--%>
+                    <%--</div>--%>
+                    <%--&lt;%&ndash;</aside>&ndash;%&gt;--%>
+                <%--</div>--%>
+            <%--</div>--%>
         </div>
         <br>
     </section>
