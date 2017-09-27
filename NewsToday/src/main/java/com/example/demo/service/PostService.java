@@ -1,10 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Category;
 import com.example.demo.entity.Post;
 import com.example.demo.repositoriy.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,10 +22,13 @@ import java.util.List;
 public class PostService {
 
     @Autowired
-    PostRepository postRepository;
+    private PostRepository postRepository;
 
 
-    public Post fileUpload(Post post, MultipartFile img) throws IOException {
+
+
+
+    public String fileUploadPost(MultipartFile img) throws IOException {
         //file upload
         File dir = new File("D:\\java\\NewsToday");
         if (!dir.exists()) {
@@ -39,8 +40,8 @@ public class PostService {
         BufferedOutputStream stream1 = new BufferedOutputStream(new FileOutputStream(serverFile));
         stream1.write(img.getBytes());
         stream1.close();
-        post.setPic(image);
-        return post;
+
+        return image;
     }
 
 
@@ -72,26 +73,31 @@ public class PostService {
     }
 
 
-    public List<Post> getPostsByDate() {
-        int i = -1;
+    public List<Post> getLastMonthPosts() {
+        int i = -30;
         List<Post> postList = new ArrayList<>();
 
         while (postList.size() == 0) {
-            postList = postRepository.findByCreatedDateAfter(getDayBeforeDate(i));
+            postList = postRepository.findByCreatedDateAfterOrderByCreatedDateDesc(getDayBeforeDate(i));
             i--;
         }
         return postList;
     }
 
+    public List<Post> getPostsOrderedByDate() {
+        return postRepository.findByOrderByCreatedDateDesc().subList(0, 7);
+    }
 
-    public List<Post> getPostsByDateAndCategoryId(long id) {
-        int i = -1;
-        List<Post> postList = new ArrayList<>();
-        while (postList.size() == 0) {
-            postList = postRepository.findByCreatedDateAfterAndCategoryByCategoryIdId(getDayBeforeDate(i), id);
-            i--;
+
+    public List<Post> getPostsByCategoryIdOrderedByDate(long id) {
+
+        List<Post> postList = postRepository.findByCategoryByCategoryIdIdOrderByCreatedDateDesc(id);
+        if (postList.size() >= 10) {
+            return postList.subList(0, 10);
+
+        } else {
+            return postList;
         }
-        return postList;
     }
 
 
@@ -138,22 +144,12 @@ public class PostService {
 
 
     private List<Post> getSortedPostList() {
-        return postRepository.findAll(sortByPositIndexAsc());
-    }
-
-    private Sort sortByPositIndexAsc() {
-        return new Sort(Sort.Direction.DESC, "positIndex");
+        return postRepository.findByOrderByPositIndex();
     }
 
 
     public List<Post> getSortedListByPopIndex() {
-        return postRepository.findAll(sortByPopIndex());
-    }
-
-    ;
-
-    private Sort sortByPopIndex() {
-        return new Sort(Sort.Direction.DESC, "popIndex");
+        return postRepository.findByOrderByPopIndex();
     }
 
 
@@ -218,7 +214,7 @@ public class PostService {
         Post post = getPostById(postId);
         long categoryId = post.getCategoryByCategoryId().getId();
 
-       return  postRepository.findAllByCategoryByCategoryIdIdOrderByPopIndexDesc(categoryId);
+        return postRepository.findAllByCategoryByCategoryIdIdOrderByPopIndexDesc(categoryId);
 
     }
 }

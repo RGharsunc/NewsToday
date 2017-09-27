@@ -1,12 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Category;
-import com.example.demo.repositoriy.CategorieRepository;
+import com.example.demo.repositoriy.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,18 +13,15 @@ import java.util.List;
 @Service
 public class CategoryService {
     @Autowired
-    private CategorieRepository categorieRepository;
+    private CategoryRepository categorieRepository;
 
     public List<Category> getListOfCatergories() {
         return categorieRepository.findAll();
     }
 
 
-    public void addCategory(Category category) {
-        categorieRepository.save(category);
-    }
 
-    public Category getCategoryByName(String name){
+    public Category getCategoryByName(String name) {
         return categorieRepository.findCategoryByName(name);
     }
 
@@ -64,20 +59,12 @@ public class CategoryService {
     }
 
     private List<Category> getSortedCategoryList() {
-        return categorieRepository.findAll(sortByPositIndexAsc());
+        return categorieRepository.findByOrderByPosition();
     }
 
-    private Sort sortByPositIndexAsc() {
-        return new Sort(Sort.Direction.ASC, "position");
-    }
 
     public List<Category> getCategoryListByPositIndex() {
-        List<Category> categories2 = getSortedCategoryList();
-//        List<Category> categories2 = new ArrayList<>();
-//        for (int i = 0; i < 4; i++) {
-//            categories2.add(categories1.get(i));
-//        }
-        return categories2;
+        return getSortedCategoryList();
     }
 
 

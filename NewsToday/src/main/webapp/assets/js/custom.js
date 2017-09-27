@@ -23,6 +23,7 @@ jQuery(document).ready(function() {
         prevButton: $('#prev-button'),
         nextButton: $('#next-button')
     });
+
     jQuery(".fancybox-buttons").fancybox({
         prevEffect: 'none',
         nextEffect: 'none',

@@ -8,6 +8,7 @@ import com.example.demo.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,40 +24,55 @@ import java.util.Date;
 public class AdminController {
 
     @Autowired
-    PostService postService;
+    private PostService postService;
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @Autowired
-    PartnerService partnerService;
+    private PartnerService partnerService;
 
     @Value("${NewsToday.fileDownload.path}")
     private String downloadPath;
 
+    @Value("${NewsToday.partner.fileDownload.path}")
+    private String downloadPartnerPath;
 
-    @ResponseBody
-    @RequestMapping(value = "/getImage", method = RequestMethod.GET)
-    public byte[] getImageAsByteArray(@RequestParam("filename") String filename) throws Exception {
-        InputStream in = new FileInputStream(downloadPath + filename);
-        return org.apache.commons.io.IOUtils.toByteArray(in);
+    @RequestMapping(value = "/admin")
+    public String toAdminJSP(ModelMap modelMap) {
+
+        modelMap.addAttribute("partners", partnerService.getPartners());
+        modelMap.addAttribute("sliderPosts", postService.getPostsOrderedByDate());
+        modelMap.addAttribute("categories", categoryService.getListOfCatergories());
+        modelMap.addAttribute("posts", postService.getListOfPosts());
+        modelMap.addAttribute("popularPosts", postService.getSortedListByPopIndex());
+
+        modelMap.addAttribute("postsForDatePolitic",
+                postService.getPostsByCategoryIdOrderedByDate(categoryService.getCategoryByName("politic").getId()));
+        modelMap.addAttribute("postsForDateSport",
+                postService.getPostsByCategoryIdOrderedByDate(categoryService.getCategoryByName("sport").getId()));
+        modelMap.addAttribute("postsForDateLive_Stile",
+                postService.getPostsByCategoryIdOrderedByDate(categoryService.getCategoryByName("live_stile").getId()));
+        modelMap.addAttribute("postsForDateBusiness",
+                postService.getPostsByCategoryIdOrderedByDate(categoryService.getCategoryByName("business").getId()));
+
+        return "admin";
     }
-
-@ResponseBody
-    @RequestMapping(value = "/getPartnerImage", method = RequestMethod.GET)
-    public byte[] getPartnerImageAsByteArray(@RequestParam("filename") String filename) throws Exception {
-        InputStream in = new FileInputStream(downloadPath + filename);
-        return org.apache.commons.io.IOUtils.toByteArray(in);
-    }
-
 
     @RequestMapping(value = "/admin/post/add", method = RequestMethod.POST)
     public String addPost(@ModelAttribute("newPost") Post post,
                           @RequestParam("img") MultipartFile image) throws IOException {
-        Post postWithImage = postService.fileUpload(post, image);
-        postWithImage.setCreatedDate(new Date());
-        postService.addPost(postWithImage);
+        post.setPic(postService.fileUploadPost(image));
+        post.setCreatedDate(new Date());
+        postService.addPost(post);
         return "redirect:/admin";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getImage", method = RequestMethod.GET)
+    public byte[] getPostImageAsByteArray(@RequestParam("filename") String filename) throws Exception {
+        InputStream in = new FileInputStream(downloadPath + filename);
+        return org.apache.commons.io.IOUtils.toByteArray(in);
     }
 
 
@@ -121,16 +137,46 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-
-
-
     @RequestMapping(value = "/admin/partner/add", method = RequestMethod.POST)
-    public String addPArtner(@ModelAttribute("partner") Partner partner,
+    public String addPost(@ModelAttribute("newPartner") Partner partner,
                           @RequestParam("img") MultipartFile image) throws IOException {
-        Partner  partnerWithImage = partnerService.fileUploadPartner(partner, image);
-        partnerService.addPartner(partnerWithImage);
+        partner.setPic(partnerService.fileUploadPartner(image));
+        partnerService.addPartner(partner);
         return "redirect:/admin";
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/getPartnerImage", method = RequestMethod.GET)
+    public byte[] getPartnerImageAsByteArray(@RequestParam("filename") String filename) throws Exception {
+        InputStream in = new FileInputStream(downloadPartnerPath + filename);
+        return org.apache.commons.io.IOUtils.toByteArray(in);
+    }
+
+    @RequestMapping(value = "/admin/partner/position/top")
+    public String setPartnerPositionTop(@RequestParam("partn") long id) {
+        partnerService.setPartnerPosition(id, "a");
+        return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/admin/partner/position/right")
+    public String setPartnerPositionRight(@RequestParam("partn") long id) {
+        partnerService.setPartnerPosition(id, "b");
+        return "redirect:/admin";
+    }
+
+
+    @RequestMapping(value = "/admin/partner/position/bottom")
+    public String setPartnerPositionBottom(@RequestParam("partn") long id) {
+        partnerService.setPartnerPosition(id, "c");
+        return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/admin/partner/position/left")
+    public String setPartnerPositionLeft(@RequestParam("partn") long id) {
+        partnerService.setPartnerPosition(id, "d");
+        return "redirect:/admin";
+    }
+
 
 }
 

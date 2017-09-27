@@ -15,8 +15,8 @@ public class Post {
     private String description;
     private Date createdDate;
     private long popIndex;
-    private long positIndex=0;
-    private long positIndexInCategory=10;
+    private long positIndex = 0;
+    private long positIndexInCategory = 10;
     private Category categoryByCategoryId;
     private String pic;
     private String region;
@@ -110,6 +110,7 @@ public class Post {
         this.region = region;
     }
 
+
     @Override
     public String toString() {
         return "Post{" +
@@ -119,6 +120,7 @@ public class Post {
                 ", createdDate=" + createdDate +
                 ", popIndex=" + popIndex +
                 ", positIndex=" + positIndex +
+                ", positIndexInCategory=" + positIndexInCategory +
                 ", categoryByCategoryId=" + categoryByCategoryId +
                 ", pic='" + pic + '\'' +
                 ", region='" + region + '\'' +
@@ -135,6 +137,7 @@ public class Post {
         if (id != post.id) return false;
         if (popIndex != post.popIndex) return false;
         if (positIndex != post.positIndex) return false;
+        if (positIndexInCategory != post.positIndexInCategory) return false;
         if (title != null ? !title.equals(post.title) : post.title != null) return false;
         if (description != null ? !description.equals(post.description) : post.description != null) return false;
         if (createdDate != null ? !createdDate.equals(post.createdDate) : post.createdDate != null) return false;
@@ -152,6 +155,7 @@ public class Post {
         result = 31 * result + (createdDate != null ? createdDate.hashCode() : 0);
         result = 31 * result + (int) (popIndex ^ (popIndex >>> 32));
         result = 31 * result + (int) (positIndex ^ (positIndex >>> 32));
+        result = 31 * result + (int) (positIndexInCategory ^ (positIndexInCategory >>> 32));
         result = 31 * result + (categoryByCategoryId != null ? categoryByCategoryId.hashCode() : 0);
         result = 31 * result + (pic != null ? pic.hashCode() : 0);
         result = 31 * result + (region != null ? region.hashCode() : 0);

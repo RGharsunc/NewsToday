@@ -7,15 +7,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../../assets/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="../../assets/css/animate.css">
-    <link rel="stylesheet" type="text/css" href="../../assets/css/font.css">
-    <link rel="stylesheet" type="text/css" href="../../assets/css/li-scroller.css">
-    <link rel="stylesheet" type="text/css" href="../../assets/css/slick.css">
-    <link rel="stylesheet" type="text/css" href="../../assets/css/jquery.fancybox.css">
-    <link rel="stylesheet" type="text/css" href="../../assets/css/theme.css">
-    <link rel="stylesheet" type="text/css" href="../../assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/font.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/li-scroller.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/slick.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/jquery.fancybox.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
     <!--[if lt IE 9]>
     <script src="/assets/js/html5shiv.min.js"></script>
     <script src="/assets/js/respond.min.js"></script>
@@ -39,14 +39,16 @@
                         </ul>
                     </div>
                     <div class="header_top_right">
-                        <script> document1.write(new Date().toLocaleDateString()); </script>
+                        <p>
+                            <script> document.write(new Date().toLocaleDateString()); </script>
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="header_bottom">
                     <div class="logo_area"><a href="/home" class="logo"><img src="../../images/logo-main.jpg"
-                                                                                 alt=""></a></div>
+                                                                             alt=""></a></div>
                     <div class="add_banner"><a href="${topPartner.url}">
                         <img src="/getPartnerImage?filename=${topPartner.pic}" alt="" style="width:728px;height: 90px;">
                     </a>
@@ -69,6 +71,7 @@
                             class="mobile-show">Home</span></a></li>
                     <li><a href="/contact">contact</a></li>
                     <li><a href="/admin">admin</a></li>
+                    <li><a href="/postlist">post list</a></li>
                     <c:forEach items="${categoryList}" var="category">
                         <li><a href="/postlist/by/category/${category.id}">${category.name}</a></li>
                     </c:forEach>
@@ -99,56 +102,36 @@
                             <li class="mail"><a href="https://mail.google.com"></a></li>
                         </ul>
                     </div>
-                    </div>
                 </div>
             </div>
+        </div>
     </section>
-    <section id="contentSection">
+    <section id="sliderSection">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8">
-                <div class="left_content">
-                    <div class="single_page">
-                        <ol class="breadcrumb">
-                            <li><a href="/home">Home</a></li>
-                            <li><a href="#">${postById.categoryByCategoryId.name}</a></li>
-                            <li class="active">Mobile</li>
-                        </ol>
-                        <h1>${postById.title}</h1>
-                        <div class="post_commentbox"><span><i class="fa fa-calendar"></i>${postById.createdDate}</span> <a href="#"><i
-                                class="fa fa-tags"></i>${postById.categoryByCategoryId.name}</a></div>
-                        <div class="single_page_content"><img class="img-center"
-                                                              src="/getImage?filename=${postById.pic}" alt="" style="width: 80%;height: auto">
-                            <p>${postById.description}</p>
+                <div class="col-lg-4 col-md-4 col-sm-4" style="width: 740px">
+                    <div class="latest_post">
+                        <h2><span>Latest post</span></h2>
+                        <div class="latest_post_container" style=" overflow-y: scroll;height: 1150px; margin-bottom: 10px">
+                            <ul>
+                                <c:forEach items="${posts}" var="post">
 
-
-                        </div>
-                        <div class="social_link">
-                            <ul class="sociallink_nav">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="related_post">
-                            <h2>Related Post <i class="fa fa-thumbs-o-up"></i></h2>
-                            <ul class="spost_nav wow fadeInDown animated">
-                               <c:forEach items="${sameCategoryPosts}" var="post">
-                                 <li>
-                                    <div class="media" style="overflow: hidden;height: 85px"><a class="media-left" href="/post/${post.id}"> <img
-                                            src="/getImage?filename=${post.pic}" alt=""> </a>
-                                        <div class="media-body"><a class="catg_title" href="/post/${post.id}"> ${post.title}</a></div>
-                                    </div>
-                                </li>
-                               </c:forEach>
-
+                                    <li class="well" style=" text-overflow: ellipsis; white-space: inherit; overflow: hidden; margin-right: 10px">
+                                        <div class="media"><a href="/post/${post.id}" class="media-left"> <img alt=""
+                                                                                                               src="/getImage?filename=${post.pic}">
+                                        </a>
+                                            <div class="media-body" style="overflow: hidden; height: 20px"><a
+                                                    href="/post/${post.id}" class="catg_title">${post.title} </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </c:forEach>
                             </ul>
                         </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
             <div class="col-lg-4 col-md-4 col-sm-4">
                 <aside class="right_content">
                     <div class="single_sidebar">
@@ -215,6 +198,7 @@
             </div>
         </div>
     </section>
+
     <footer id="footer">
         <div class="footer_top">
             <div class="row">
@@ -229,9 +213,7 @@
                         </address>
                     </div>
                 </div>
-
             </div>
-
         </div>
         <div class="footer_bottom">
             <p class="copyright">Copyright &copy; 2045 <a href="/home">NewsToday</a></p>
@@ -239,13 +221,13 @@
         </div>
     </footer>
 </div>
-<script src="../../assets/js/jquery.min.js"></script>
-<script src="../../assets/js/wow.min.js"></script>
-<script src="../../assets/js/bootstrap.min.js"></script>
-<script src="../../assets/js/slick.min.js"></script>
-<script src="../../assets/js/jquery.li-scroller.1.0.js"></script>
-<script src="../../assets/js/jquery.newsTicker.min.js"></script>
-<script src="../../assets/js/jquery.fancybox.pack.js"></script>
-<script src="../../assets/js/custom.js"></script>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/wow.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/slick.min.js"></script>
+<script src="/assets/js/jquery.li-scroller.1.0.js"></script>
+<script src="/assets/js/jquery.newsTicker.min.js"></script>
+<script src="/assets/js/jquery.fancybox.pack.js"></script>
+<script src="/assets/js/custom.js"></script>
 </body>
 </html>
