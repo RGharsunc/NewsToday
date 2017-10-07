@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -20,7 +21,6 @@ public class Post {
     private Category categoryByCategoryId;
     private String pic;
     private String region;
-
 
     @Id
     public long getId() {
@@ -58,6 +58,7 @@ public class Post {
         this.positIndexInCategory = positIndexInCategory;
     }
 
+    @NotNull
     public String getDescription() {
         return description;
     }
@@ -74,6 +75,7 @@ public class Post {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
+
 
     @Column(name = "pop_index")
     public long getPopIndex() {

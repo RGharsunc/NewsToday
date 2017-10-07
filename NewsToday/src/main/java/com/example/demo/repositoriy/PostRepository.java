@@ -15,12 +15,13 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByCreatedDateAfterOrderByCreatedDateDesc(Date dayBefore);
 
     List<Post> findByOrderByCreatedDateDesc();
+    List<Post> findAllByCategoryByCategoryIdIdAndCreatedDateAfterOrderByCreatedDateDesc(long id, Date date);
 
     List<Post> findByCategoryByCategoryIdIdOrderByCreatedDateDesc(long id);
 
     List<Post> findByOrderByPopIndex();
 
-    List<Post> findByOrderByPositIndex();
+    List<Post> findByOrderByPositIndexDesc();
 
     Post getByPositIndex(long positIndex);
 

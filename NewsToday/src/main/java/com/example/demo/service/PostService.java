@@ -63,6 +63,16 @@ public class PostService {
         return posts2;
     }
 
+    public List<Post> getListOfPostsByCategoryForPostListForLastMonth(long id){
+        int i = -30;
+        List<Post> postList = new ArrayList<>();
+
+
+        while (postList.size()<=10) {
+            postList = postRepository.findAllByCategoryByCategoryIdIdAndCreatedDateAfterOrderByCreatedDateDesc(id,getDayBeforeDate(i));
+            i--;
+        }
+        return postList;    }
 
     private Date getDayBeforeDate(int i) {
         Date date;
@@ -74,10 +84,10 @@ public class PostService {
 
 
     public List<Post> getLastMonthPosts() {
-        int i = -30;
+         int i = -30;
         List<Post> postList = new ArrayList<>();
 
-        while (postList.size() == 0) {
+        while (postList.size() <+10) {
             postList = postRepository.findByCreatedDateAfterOrderByCreatedDateDesc(getDayBeforeDate(i));
             i--;
         }
@@ -144,7 +154,7 @@ public class PostService {
 
 
     private List<Post> getSortedPostList() {
-        return postRepository.findByOrderByPositIndex();
+        return postRepository.findByOrderByPositIndexDesc();
     }
 
 
@@ -160,11 +170,6 @@ public class PostService {
             posts2.add(posts1.get(i));
         }
         return posts2;
-    }
-
-
-    public List<Post> getPostListByCategory(String name) {
-        return postRepository.findAllByCategoryByCategoryIdName(name);
     }
 
 
@@ -212,9 +217,13 @@ public class PostService {
 
     public List<Post> getSameCategoryPosts(long postId) {
         Post post = getPostById(postId);
+
+
         long categoryId = post.getCategoryByCategoryId().getId();
 
         return postRepository.findAllByCategoryByCategoryIdIdOrderByPopIndexDesc(categoryId);
 
     }
+
+
 }

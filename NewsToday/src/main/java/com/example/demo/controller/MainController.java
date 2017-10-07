@@ -34,10 +34,10 @@ public class MainController {
         return "contact";
     }
 
-
-
-
-
+//    @RequestMapping(value = "/admin")
+//    public String ToAdmin() {
+//        return "redirect:/ad";
+//    }
 
 
 }

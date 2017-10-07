@@ -49,7 +49,7 @@ public class PostListController {
         modelMap.addAttribute("rightPartner", partnerService.getPartnerByPosition("b"));
         modelMap.addAttribute("bottomPartner", partnerService.getPartnerByPosition("c"));
         modelMap.addAttribute("leftPartner", partnerService.getPartnerByPosition("d"));
-        modelMap.addAttribute("posts", postService.getListOfPostsByCategoryId(id));
+        modelMap.addAttribute("posts", postService.getListOfPostsByCategoryForPostListForLastMonth(id));
         modelMap.addAttribute("popularPosts", postService.getSortedListByPopIndex().subList(0, 5));
         modelMap.addAttribute("categoryList", categoryService.getListOfCatergories());
 
