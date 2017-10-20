@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -12,7 +13,11 @@ import java.util.Date;
 public class Post {
 
     private long id;
+    @NotNull
+    @Size(min = 1, message = "TITLE!!!")
     private String title;
+    @NotNull
+    @Size(min = 1, message = "DESCRIPTION!!!")
     private String description;
     private Date createdDate;
     private long popIndex;
@@ -20,6 +25,8 @@ public class Post {
     private long positIndexInCategory = 10;
     private Category categoryByCategoryId;
     private String pic;
+    @NotNull
+    @Size(min = 1, message = "REGION!!!")
     private String region;
 
     @Id

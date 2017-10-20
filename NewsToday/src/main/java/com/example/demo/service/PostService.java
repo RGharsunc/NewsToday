@@ -46,7 +46,7 @@ public class PostService {
 
 
     public List<Post> getListOfPosts() {
-        return postRepository.findAll();
+        return postRepository.findByOrderByCreatedDateDesc();
     }
 
 
@@ -67,8 +67,7 @@ public class PostService {
         int i = -30;
         List<Post> postList = new ArrayList<>();
 
-
-        while (postList.size()<=10) {
+        while (postList.size()<4) {
             postList = postRepository.findAllByCategoryByCategoryIdIdAndCreatedDateAfterOrderByCreatedDateDesc(id,getDayBeforeDate(i));
             i--;
         }

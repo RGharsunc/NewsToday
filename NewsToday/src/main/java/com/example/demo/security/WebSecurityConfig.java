@@ -6,31 +6,42 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.
-                csrf()
-                .disable()
-                .
-                        formLogin()
-                .and().
-                formLogin()
+        http
+                .csrf().disable().authorizeRequests()
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/admin**").hasAuthority("ADMIN")
+                .antMatchers("/CVA**").hasAuthority("PRIV")
+                .antMatchers("/CVA/**").hasAuthority("PRIV")
                 .and()
-                .authorizeRequests()
-                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                .anyRequest().permitAll();
+                .formLogin()
+                .loginPage("/login")
+                .usernameParameter("j_username")
+                .passwordParameter("j_password")
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/errors")
+                .and()
+                .logout()
+                .logoutUrl("/logout");
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN")
-//                .and().withUser("user").password("user").roles("USER")
-        ;
+        auth
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
 }

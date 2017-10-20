@@ -13,28 +13,28 @@ import java.util.List;
 @Service
 public class CategoryService {
     @Autowired
-    private CategoryRepository categorieRepository;
+    private CategoryRepository categoryRepository;
 
     public List<Category> getListOfCatergories() {
-        return categorieRepository.findAll();
+        return categoryRepository.findAll();
     }
 
 
 
     public Category getCategoryByName(String name) {
-        return categorieRepository.findCategoryByName(name);
+        return categoryRepository.findCategoryByName(name);
     }
 
     private void setIndexForCategoryById(long id, long index) {
 
-        if (categorieRepository.findByPosition(index) != null) {
-            Category category1 = categorieRepository.findByPosition(index);
+        if (categoryRepository.findByPosition(index) != null) {
+            Category category1 = categoryRepository.findByPosition(index);
             category1.setPosition(10);
-            categorieRepository.save(category1);
+            categoryRepository.save(category1);
         }
-        Category category = categorieRepository.findOne(id);
+        Category category = categoryRepository.findOne(id);
         category.setPosition(index);
-        categorieRepository.save(category);
+        categoryRepository.save(category);
 
 
     }
@@ -59,12 +59,13 @@ public class CategoryService {
     }
 
     private List<Category> getSortedCategoryList() {
-        return categorieRepository.findByOrderByPosition();
+        return categoryRepository.findByOrderByPosition();
     }
 
 
     public List<Category> getCategoryListByPositIndex() {
-        return getSortedCategoryList();
+     List<Category> categories= getSortedCategoryList();
+        return categories;
     }
 
 

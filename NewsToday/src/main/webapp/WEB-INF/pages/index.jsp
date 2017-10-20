@@ -35,12 +35,13 @@
                     <div class="header_top_left">
                         <ul class="top_nav">
                             <li><a href="/home">Home</a></li>
-                            <li><a href="#">About</a></li>
-                            <li><a href="/contact">Contact</a></li>
+                            <li><a href="/logout">LOGOUT</a></li>
+                            <li><a href="https://github.com/RGharsunc/NewsToday" target="_blank">Git</a></li>
                         </ul>
                     </div>
                     <div class="header_top_right">
                         <p>
+                            <a href="/CVA">CV ADMIN</a>
                             <script> document.write(new Date().toLocaleDateString()); </script>
                         </p>
                     </div>
@@ -50,7 +51,7 @@
                 <div class="header_bottom">
                     <div class="logo_area"><a href="/home" class="logo"><img src="../../images/logo-main.jpg"
                                                                              alt=""></a></div>
-                    <div class="add_banner"><a href="#">
+                    <div class="add_banner" title="To My CV PAGE"><a href="${topPartner.url}" target="_blank">
                         <img src="/getPartnerImage?filename=${topPartner.pic}" alt="" style="width:728px;height: 90px;">
                     </a>
                     </div>
@@ -70,12 +71,12 @@
                 <ul class="nav navbar-nav main_nav">
                     <li class="active"><a href="/home"><span class="fa fa-home desktop-home"></span><span
                             class="mobile-show">Home</span></a></li>
-                    <li><a href="/contact">contact</a></li>
-                    <li><a href="/admin">admin</a></li>
                     <li><a href="/postlist">post list</a></li>
                     <c:forEach items="${categoryList}" var="category">
                         <li><a href="/postlist/by/category/${category.id}">${category.name}</a></li>
                     </c:forEach>
+                    <li><a href="/cv" target="_blank">my cv</a></li>
+                    <li><a href="/admin">admin</a></li>
                 </ul>
             </div>
         </nav>
@@ -93,14 +94,15 @@
                     </ul>
                     <div class="social_area">
                         <ul class="social_nav">
-                            <li class="facebook"><a href="https://web.facebook.com/profile.php?id=100009074155208"></a></li>
-                            <li class="twitter"><a href="https://twitter.com/"></a></li>
-                            <li class="flickr"><a href="https://www.flickr.com/"></a></li>
-                            <li class="pinterest"><a href="https://www.pinterest.com/"></a></li>
-                            <li class="googleplus"><a href="https://plus.google.com/discover"></a></li>
-                            <li class="vimeo"><a href="https://vimeo.com/"></a></li>
-                            <li class="youtube"><a href="https://www.youtube.com/"></a></li>
-                            <li class="mail"><a href="https://mail.google.com"></a></li>
+                            <li class="facebook"><a href="https://web.facebook.com/profile.php?id=100009074155208"></a>
+                            </li>
+                            <li class="twitter"><a href="https://twitter.com/" target="_blank"></a></li>
+                            <li class="flickr"><a href="https://www.flickr.com/" target="_blank"></a></li>
+                            <li class="pinterest"><a href="https://www.pinterest.com/" target="_blank"></a></li>
+                            <li class="googleplus"><a href="https://plus.google.com/discover" target="_blank"></a></li>
+                            <li class="vimeo"><a href="https://vimeo.com/" target="_blank"></a></li>
+                            <li class="youtube"><a href="https://www.youtube.com/" target="_blank"></a></li>
+                            <li class="mail"><a href="https://mail.google.com" target="_blank"></a></li>
                         </ul>
                     </div>
                 </div>
@@ -1245,7 +1247,6 @@
                                                 href="/postlist/by/category/${category.id}">${category.name}</a>
                                         </li>
                                     </c:forEach>
-                                    <li class="cat-item"><a href="/post_list/photos">Photography</a></li>
                                 </ul>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="video">
@@ -1259,16 +1260,9 @@
                     <div class="single_sidebar wow fadeInDown">
                         <h2><span>Partner</span></h2>
                         <a class="sideAdd" href="${rightPartner.url}" target="_blank"><img
-                                src="/getPartnerImage?filename=${rightPartner.pic}" alt=""></a></div>
-                    <div class="single_sidebar wow fadeInDown">
-                        <h2><span>Category Archive</span></h2>
-                        <select class="catgArchive">
-                            <c:forEach items="${categoryList}" var="category">
-
-                                <option>${category.name}</option>
-                            </c:forEach>
-                        </select>
+                                src="/getPartnerImage?filename=${rightPartner.pic}" alt=""></a>
                     </div>
+
                 </aside>
             </div>
         </div>
@@ -1280,17 +1274,17 @@
                 <div class="col-lg-4 col-md-4 col-sm-4" style="height: 150px">
                     <div class="footer_widget wow fadeInRightBig" style="width: 800px;margin-left: 50px">
                         <h2>Contact</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <p>r.gharsunc@gmail.com</p>
+                        <p>+374 702 392</p>
                         <address>
-                            Perfect News,1238 S . 123 St.Suite 25 Town City 3333,USA Phone: 123-326-789 Fax: 123-546-567
+                            Nubarashen Highway, 3/5 bldg., 24 apt, Yerevan, Armenia
                         </address>
                     </div>
                 </div>
             </div>
         </div>
         <div class="footer_bottom">
-            <p class="copyright">Copyright &copy; 2045 <a href="/home">NewsToday</a></p>
+            <p class="copyright">Copyright &copy; 2045 NewsToday</p>
             <p class="developer">Developed By Wpfreeware</p>
         </div>
     </footer>

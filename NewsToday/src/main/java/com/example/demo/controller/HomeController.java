@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 
+
+
     @Autowired
     private CategoryService categoryService;
 
@@ -35,6 +37,8 @@ public class HomeController {
         modelMap.addAttribute("sliderPosts", postService.getPostsOrderedByDate());
         modelMap.addAttribute("mainPosts", postService.getPostListByPositIndex());
         modelMap.addAttribute("sortedCategories", categoryService.getCategoryListByPositIndex());
+
+
         modelMap.addAttribute("politicPosts", postService.
                 getListOfPostsByCategoryId(categoryService.getCategoryByName("politic").getId()));
         modelMap.addAttribute("sportPosts", postService.

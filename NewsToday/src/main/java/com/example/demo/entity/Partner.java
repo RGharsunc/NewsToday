@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Vardan on 24.09.2017.
@@ -14,12 +15,23 @@ import javax.persistence.Table;
 public class Partner {
 
     private long id;
+
+    @NotNull
     private String name;
+
+    @NotNull
     private String title;
+
+    @NotNull
     private String url;
+
     private String videoUrl;
+
     private String description;
+
+//    @NotNull
     private String pic;
+
     private String posit;
 
     @Id

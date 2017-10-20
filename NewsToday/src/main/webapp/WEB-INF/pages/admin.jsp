@@ -36,12 +36,9 @@
                         <ul class="top_nav">
                             <li><a href="/home">Home</a></li>
                             <li><a href="#">About</a></li>
-                            <li><a href="/contact">Contact</a></li>
+                            <li><a href="https://github.com/RGharsunc/NewsToday" target="_blank">Git</a></li>
 
                         </ul>
-                    </div>
-                    <div class="header_top_right">
-                        <script> document.write(new Date().toLocaleDateString()); </script>
                     </div>
                 </div>
             </div>
@@ -69,41 +66,11 @@
                             class="mobile-show">Home</span></a></li>
                     <li><a href="#post_and_categories">post and categories</a></li>
                     <li><a href="#POST_POSITIONS">POST POSITIONS</a></li>
-                    <li><a href="#">Laptops</a></li>
                     <li><a href="#partners">partners</a></li>
-                    <li><a href="/contact">Contact Us</a></li>
-                    <li><a href="404.html">404 Page</a></li>
+                    <li><a href="#admin">Admin</a></li>
                 </ul>
             </div>
         </nav>
-    </section>
-    <section id="newsSection">
-        <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="latest_newsarea"><span>Latest News</span>
-                    <ul id="ticker01" class="news_sticker">
-                        <c:forEach items="${sliderPosts}" var="post">
-                            <li style="overflow: hidden"><a href="/post/${post.id}"><img
-                                    src="/getImage?filename=${post.pic}" alt="">${post.title}&nbsp;</a>
-                            </li>
-                        </c:forEach>
-                    </ul>
-                    <div class="social_area">
-                        <ul class="social_nav">
-                            <li class="facebook"><a href="#"></a></li>
-                            <li class="twitter"><a href="#"></a></li>
-                            <%--<li class="flickr"><a href="#"></a></li>--%>
-                            <%--<li class="pinterest"><a href="#"></a></li>--%>
-                            <li class="googleplus"><a href="#"></a></li>
-                            <%--<li class="vimeo"><a href="#"></a></li>--%>
-                            <li class="youtube"><a href="#"></a></li>
-                            <%--<li class="search"><a href="#"></a></li>--%>
-                            <%--<li><input type="search"> </li>--%>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
     <section id="contentSection">
         <div class="row">
@@ -125,7 +92,8 @@
                             <input class="form-control" type="text" placeholder="Title*" name="title">
                             <textarea class="form-control" cols="20" rows="10" name="description"
                                       placeholder="Description*"></textarea>
-                            <input class="form-control" type="text" placeholder="Region*" name="region">
+                            <input class="form-control" type="text" placeholder="Region*"
+                                   name="region">
                             <label for="category">Choose the post category</label>
 
                             <select class="form-control" name="categoryByCategoryId" id="category">
@@ -138,7 +106,6 @@
                             <label for="pic">Set post picture</label>
                             <div class="media">
                                 <div class="media-left">
-                                    <%--<img src="/images/post_image.png" class="media-object" style="width:60px">--%>
                                     <input class="form-control" id="pic" type="file" name="img"><br>
                                 </div>
                             </div>
@@ -158,25 +125,25 @@
                     <div class="contact_area">
                         <h2>Choose from post list main four posts</h2>
                         <form action="/admin/post/set/main-position" class="contact_form" method="post">
-
-                            <select class="form-control" name="id1">
+                            <select class="form-control" name="id1" style="overflow: hidden">
                                 <c:forEach items="${posts}" var="post">
-                                    <option value="${post.id}">${post.title.substring(0,30)}${"..."}</option>
+                                    <option value="${post.id}">${post.title}</option>
+                                </c:forEach>
+                            </select>
+                            <br>
+                            <select class="form-control" name="id2" style="overflow: hidden">
+                                <c:forEach items="${posts}" var="post">
+                                    <option value="${post.id}">${post.title}</option>
                                 </c:forEach>
                             </select><br>
-                            <select class="form-control" name="id2">
+                            <select class="form-control" name="id3" style="overflow: hidden">
                                 <c:forEach items="${posts}" var="post">
-                                    <option value="${post.id}">${post.title.substring(0,30)}${"..."}</option>
+                                    <option value="${post.id}">${post.title}</option>
                                 </c:forEach>
                             </select><br>
-                            <select class="form-control" name="id3">
+                            <select class="form-control" name="id4" style="overflow: hidden">
                                 <c:forEach items="${posts}" var="post">
-                                    <option value="${post.id}">${post.title.substring(0,30)}${"..."}</option>
-                                </c:forEach>
-                            </select><br>
-                            <select class="form-control" name="id4">
-                                <c:forEach items="${posts}" var="post">
-                                    <option value="${post.id}">${post.title.substring(0,30)}${"..."}</option>
+                                    <option value="${post.id}">${post.title}</option>
                                 </c:forEach>
                             </select><br>
                             <input type="submit" value="Confirm">
@@ -382,13 +349,14 @@
                 <div class="left_content well">
                     <div class="contact_area">
                         <h2>Add Partner</h2>
+
                         <form action="/admin/partner/add" class="contact_form" name="partner" method="post"
                               enctype="multipart/form-data" role="form">
                             <input class="form-control" type="text" placeholder="Name*" name="name">
                             <input class="form-control" type="text" placeholder="URL*" name="url">
                             <input class="form-control" type="text" placeholder="Video URL*" name="video">
                             <input class="form-control" type="text" placeholder="Title*" name="title">
-                            <textarea class="form-control" cols="20" rows="10" name="description"
+                            <textarea class="form-control" cols="20" rows="10" name="prof"
                                       placeholder="Description*"></textarea>
                             <label for="image">Set partner picture</label>
                             <div class="media">
@@ -461,6 +429,45 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row">
+            <div>
+                <h2 class="well" id="admin" style="margin-left: 120px;margin-right: 120px;background-color: #adadad"
+                    align="center"> ADMIN</h2>
+            </div>
+
+            <div class="col-lg-8 col-md-8 col-sm-8 " style="width: 370px">
+                <div class="left_content well">
+                    <div class="contact_area">
+                        <h2>Add ADMIN</h2>
+                        <form action="/admin/user/add" class="contact_form" name="user">
+                            <input class="form-control" type="text" placeholder="Email*" name="email">
+                            <input class="form-control" type="password" placeholder="Password* min 8" name="password">
+                            <br>
+                            <input type="submit" value="Confirm">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8 col-md-8 col-sm-8 " style="width: 370px">
+                <div class="left_content well">
+                    <div class="contact_area">
+                        <h2>delete ADMIN</h2>
+
+                        <form action="/admin/user/delete" class="contact_form" name="partner" method="post">
+                            <select class="form-control" name="id">
+                                <c:forEach items="${userList}" var="user">
+                                    <option value="${user.id}">${user.email}</option>
+                                </c:forEach>
+                            </select><br>
+                            <input type="submit" value="Confirm">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <br>
     </section>
